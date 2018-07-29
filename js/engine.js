@@ -99,16 +99,21 @@ var Engine = (function(global) {
     /* when enemies and player are overlaied in area of 50 by 50, collisions happens.
      * System would alert user about the collision and restart the game.
      */
-    function checkCollisions() {
+    function checkCollisions(dt) {
         allEnemies.forEach(function(enemy) {
             if ((enemy.x - player.currentX) > -50 && (enemy.x - player.currentX) < 50) {
                 if ((enemy.y - player.currentY) > -50 && (enemy.y - player.currentY) < 50) {
-                    alert('Failed! Try Again');
+                    // fix problem of image of collision are pained after alert message
+                    // displayed: delaying display the alert message
+                    setTimeout(function() {
+                                            alert('Failed! Try Again');
                     allEnemies.forEach(function(enemy) {
                         enemy.x = 0;
                     });
                     player.x = 200;
                     player.y = 325;
+
+                    }, dt)
                 }
             }
         });
