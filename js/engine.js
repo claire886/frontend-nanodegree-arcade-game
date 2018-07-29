@@ -114,7 +114,10 @@ var Engine = (function(global) {
                     // displayed: delaying display the alert message
                     setTimeout(function() {
                         alert('Failed! Try Again');
-                        points = 0;
+                        if (points > 0) {
+                            points = 0;
+                            allEnemies.splice(3);
+                        }
                         player.x = 200;
                         player.y = 325;
                         }, dt)
@@ -133,8 +136,20 @@ var Engine = (function(global) {
     }
 
     function restartWon() {
+        let enemiesRow = points % 3;
         player.x = 200;
         player.y = 325;
+        // add more enemies to rows in turn
+        switch(enemiesRow) {
+            case 0:
+                allEnemies.push(new Enemy(-100, 62, Math.floor(Math.random() * points * 10)));
+                break;
+            case 1:
+                allEnemies.push(new Enemy(-100, 145, 50));
+                break;
+            case 2:
+                allEnemies.push(new Enemy(-100, 228, 50));
+        }
     }
 
     /* This function initially draws the "game level", it will then call

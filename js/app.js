@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     if (this.x >= 500) {
-        this.x = 0;
+        this.x = -100;
     }
     this.x += dt * this.dtMultiplier;
 };
@@ -78,7 +78,16 @@ Player.prototype.handleInput = function(move) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-const allEnemies = [new Enemy(0, 62, 130), new Enemy(0, 145, 150), new Enemy(0, 228, 100)];
+// store enemies initial Y in an object, later can be used
+// to add more enemies when player wins.
+/*
+const enemiesInitialY = {
+        row1: 62,
+        row2: 145,
+        row3: 228
+      }
+*/      
+const allEnemies = [new Enemy(-60, 62, 60), new Enemy(0, 145, 80), new Enemy(-30, 228, 70)];
 const player = new Player(200, 325);
 
 // This listens for key presses and sends the keys to your
