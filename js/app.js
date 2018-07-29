@@ -58,7 +58,9 @@ Player.prototype.handleInput = function(move) {
             }
             break;
         case 'up':
-            this.y -= 83;
+            if (this.y > -7) {
+                this.y -= 83;
+            }
             break;
         case 'right':
             if (this.x < 402) {
@@ -76,7 +78,7 @@ Player.prototype.handleInput = function(move) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-const allEnemies = [new Enemy(0, 62, 30), new Enemy(0, 145, 50), new Enemy(0, 228, 100)];
+const allEnemies = [new Enemy(0, 62, 130), new Enemy(0, 145, 150), new Enemy(0, 228, 100)];
 const player = new Player(200, 325);
 
 // This listens for key presses and sends the keys to your

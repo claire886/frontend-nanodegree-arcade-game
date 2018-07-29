@@ -27,6 +27,7 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+    points = 0;
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -79,7 +80,13 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
+        // check if player wins.
+        if (player.currentY === -7) {
+            points ++;
+            playerWin(dt);
+        } else {
+            checkCollisions(dt);
+        }
     }
 
     /* This is called by the update function and loops through all of the
@@ -106,17 +113,28 @@ var Engine = (function(global) {
                     // fix problem of image of collision are pained after alert message
                     // displayed: delaying display the alert message
                     setTimeout(function() {
-                                            alert('Failed! Try Again');
-                    allEnemies.forEach(function(enemy) {
-                        enemy.x = 0;
-                    });
-                    player.x = 200;
-                    player.y = 325;
-
-                    }, dt)
+                        alert('Failed! Try Again');
+                        points = 0;
+                        player.x = 200;
+                        player.y = 325;
+                        }, dt)
                 }
             }
         });
+    }
+
+    // when player won, give player point and restart the game with harder condition
+    function playerWin(dt) {
+        // setTimeout to avoid the alert message displayed before won image repainted.
+        setTimeout(function() {
+            alert(`You won! Your current score is ${points}`)
+            restartWon();
+        }, dt)
+    }
+
+    function restartWon() {
+        player.x = 200;
+        player.y = 325;
     }
 
     /* This function initially draws the "game level", it will then call
