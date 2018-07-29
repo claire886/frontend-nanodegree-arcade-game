@@ -79,7 +79,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -94,6 +94,24 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+    /* when enemies and player are overlaied in area of 50 by 50, collisions happens.
+     * System would alert user about the collision and restart the game.
+     */
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            if ((enemy.x - player.currentX) > -50 && (enemy.x - player.currentX) < 50) {
+                if ((enemy.y - player.currentY) > -50 && (enemy.y - player.currentY) < 50) {
+                    alert('Failed! Try Again');
+                    allEnemies.forEach(function(enemy) {
+                        enemy.x = 0;
+                    });
+                    player.x = 200;
+                    player.y = 325;
+                }
+            }
+        });
     }
 
     /* This function initially draws the "game level", it will then call
