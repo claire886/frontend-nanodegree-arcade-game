@@ -1,4 +1,5 @@
 // Enemies our player must avoid
+// parameter: x & y => enemies initial position, dtMultiplier => multiplier for dt
 var Enemy = function(x, y, dtMultiplier) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -19,6 +20,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
+    // when enemies go off the screen, make them start again from the left
     if (this.x >= 500) {
         this.x = -100;
     }
@@ -33,23 +36,30 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+
+// create constructor function for player
+// parameter: x & y => player initial position
 var Player = function(x, y) {
     this.sprite = 'images/char-boy.png';
     this.x = x;
     this.y = y;
 }
 
+// update method for player
+// get updated player position 
 Player.prototype.update = function() {
     this.currentX = this.x;
     this.currentY = this.y;
 };
 
+//// Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// Move player according to keyCode from 'keyup' eventListener.
-// Don't let player would move off screen.
+// Move player according to keyCode from 'keyup' eventListener below.
+// Prevent player from moving off screen.
+// Paremeter: move => user movement from keyboard event listener
 Player.prototype.handleInput = function(move) {
     switch (move) {
         case 'left':
@@ -77,16 +87,6 @@ Player.prototype.handleInput = function(move) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
-// store enemies initial Y in an object, later can be used
-// to add more enemies when player wins.
-/*
-const enemiesInitialY = {
-        row1: 62,
-        row2: 145,
-        row3: 228
-      }
-*/      
 const allEnemies = [new Enemy(-60, 62, 60), new Enemy(0, 145, 80), new Enemy(-30, 228, 70)];
 const player = new Player(200, 325);
 

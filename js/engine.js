@@ -27,6 +27,7 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+    // accumulated points when player won
     points = 0;
 
     /* This function serves as the kickoff point for the game loop itself
@@ -80,7 +81,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // check if player wins.
+        // check if player wins, otherwise check if collision happens
         if (player.currentY === -7) {
             points ++;
             playerWin(dt);
@@ -103,15 +104,15 @@ var Engine = (function(global) {
         player.update();
     }
 
-    /* when enemies and player are overlaied in area of 50 by 50, collisions happens.
+    /* when enemies and player are overlaied in area of 50 by 50, a collision happens.
      * System would alert user about the collision and restart the game.
      */
     function checkCollisions(dt) {
         allEnemies.forEach(function(enemy) {
             if ((enemy.x - player.currentX) > -50 && (enemy.x - player.currentX) < 50) {
                 if ((enemy.y - player.currentY) > -50 && (enemy.y - player.currentY) < 50) {
-                    // fix problem of image of collision are pained after alert message
-                    // displayed: delaying display the alert message
+                    // use setTimeout to fix problem of collision image displayed
+                    //  after alert message is showed: delaying display the alert message
                     setTimeout(function() {
                         alert('Failed! Try Again');
                         if (points > 0) {
@@ -126,20 +127,25 @@ var Engine = (function(global) {
         });
     }
 
-    // when player won, give player point and restart the game with harder condition
+    // when player won, give player one point and accumulated the total points.
+    // after player won, restart the game with adding one more enemy 
     function playerWin(dt) {
-        // setTimeout to avoid the alert message displayed before won image repainted.
+        // setTimeout to avoid the alert message displayed before showing player succed.
         setTimeout(function() {
-            alert(`You won! Your current score is ${points}`)
+            alert(`You made it! Your current score is ${points}`)
             restartWon();
         }, dt)
     }
 
+    // called by playerwin
+    // after player won, move player back to the initial position
+    // and add one more enemy to the game to make it harder.
     function restartWon() {
+        // decide which row to add one enemy
         let enemiesRow = points % 3;
         player.x = 200;
         player.y = 325;
-        // add more enemies to rows in turn
+        // add one enemy to one row in turn
         switch(enemiesRow) {
             case 0:
                 allEnemies.push(new Enemy(-100, 62, Math.floor(Math.random() * points * 10)));
