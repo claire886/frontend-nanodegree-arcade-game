@@ -1,6 +1,7 @@
-frontend-nanodegree-arcade-game
-===============================
+Open index.html file and the game is ready to play.
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Use arrow keys(up, right, down and left) to move the player from grass to water. The player has to cross the road to get to the water side. There are enemies going through the road and the goal is to avoid collision. 
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+If a collision happens, the game is over and will restart again.
+
+If the player gets to the water side, you will gain one point. Each time after the player gets to the water side, the player will return to the starting point to play another round. At the same time, one more enemy is added on the road. As your score is getting higher, there are more enemies on the road and it is more difficult to get to the water side.
